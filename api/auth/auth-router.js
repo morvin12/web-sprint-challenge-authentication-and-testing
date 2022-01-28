@@ -1,5 +1,11 @@
 const router = require('express').Router();
 
+const bcryptjs = require('bcryptjs');
+
+const { tokenBuilder } = require('./auth-token')
+const JWT_SECRET = require('../secrets/index')
+
+
 router.post('/register', (req, res) => {
   res.end('implement register, please!');
   /*
