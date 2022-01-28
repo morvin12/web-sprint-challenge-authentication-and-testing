@@ -1,8 +1,7 @@
 const request = require("supertest");
 const server = require("../api/server");
-// const User = require("../api/users/users-model");
 const db = require("../data/dbConfig");
-// const Jokes = require('./jokes/jokes-data');
+// const Jokes = require("./jokes/jokes-data");
 
 test("Sanity", () => {
   expect(true).toBe(true);
@@ -60,5 +59,18 @@ describe("Login Endpoint", () => {
   it("[GET] /auth/login - invalid password, returns 401", async () => {
     let res = await request(server).post("/api/auth/login").send(userWrongPass);
     expect(res.status).toBe(401);
+  });
+});
+
+describe("Joke Endpoints", () => {
+  const user = { username: "harrypotter", password: "1234" };
+
+  it("[GET] /jokes - token, returns all 3 jokes", async () => {
+    let login = await request(server).post("/api/auth/login").send(user);
+    let token = login.body.token;
+    let res = await request(server)
+      .get("/api/jokes")
+      .set("Authorization", token);
+    expect(res.body).toHaveLength(3);
   });
 });
