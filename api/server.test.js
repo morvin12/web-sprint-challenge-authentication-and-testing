@@ -23,7 +23,7 @@ describe("Testing on testing environment", () => {
   });
 });
 
-describe("registration endpoint", () => {
+describe("Registration Endpoint", () => {
   const user = { username: "harrypotter", password: "1234" };
   const userOnly = { username: "harrypotter" };
 
@@ -45,5 +45,20 @@ describe("registration endpoint", () => {
   it("[GET] /auth/register - existing user, returns 422", async () => {
     let res = await request(server).post("/api/auth/register").send(user);
     expect(res.status).toBe(422);
+  });
+});
+
+describe("Login Endpoint", () => {
+  const user = { username: "harrypotter", password: "1234" };
+  const userWrongPass = { user: "harrypotter", password: "lkajsdklf" };
+
+  it("[GET] /auth/login - user can login, returns 200", async () => {
+    let res = await request(server).post("/api/auth/login").send(user);
+    expect(res.status).toBe(200);
+  });
+
+  it("[GET] /auth/login - invalid password, returns 401", async () => {
+    let res = await request(server).post("/api/auth/login").send(userWrongPass);
+    expect(res.status).toBe(401);
   });
 });
