@@ -1,7 +1,6 @@
 const request = require("supertest");
 const server = require("../api/server");
 const db = require("../data/dbConfig");
-// const Jokes = require("./jokes/jokes-data");
 
 test("Sanity", () => {
   expect(true).toBe(true);
